@@ -4,27 +4,26 @@
 import React from 'react';
 import styles from './Person.pcss';
 import cx from 'classnames';
-import Button from './Button';
 import {pure} from 'recompose';
+
+//material
+import {ListItem} from 'material-ui/List';
+import ActionDelete from 'material-ui/svg-icons/action/delete';
+import IconMale from 'material-ui/svg-icons/action/accessibility';
+import IconFemale from 'material-ui/svg-icons/action/pregnant-woman';
+import {purple300 as red, blue300 as blue, red300 as deleteColor} from 'material-ui/styles/colors';
 
 const Person = props => {
   const {person, deletePerson} = props;
-  const gender = person.gender === 'm' ? "Male" : "Female";
 
-  const genderClasses = cx(
-    styles.gender,
-    {
-      [styles.male]: person.gender === 'm',
-      [styles.female]: person.gender === 'f',
-    }
-  );
+  const icon = person.gender === 'm' ? <IconMale color={blue} /> : <IconFemale color={red} />;
 
-  return (
-    <div className={styles.root}>
-      {person.firstName} {person.lastName}&nbsp;
-      <small className={genderClasses}>{gender}</small>
-      &nbsp;&nbsp;<Button className={styles.btn} onClick={e => deletePerson(person)}>remove</Button>
-    </div>
+  return(
+    <ListItem
+      primaryText={`${person.firstName} ${person.lastName}, ${person.age} years`}
+      leftIcon={icon}
+      rightIcon={<ActionDelete color={deleteColor} onClick={e => deletePerson(person)} />}
+    />
   );
 
 };

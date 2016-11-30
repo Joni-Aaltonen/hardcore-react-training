@@ -51,6 +51,8 @@ class AddPersonForm extends React.Component {
   }
 
   render() {
+    if(this.props.visible === false) return false;
+
     return (
       <form onSubmit={this.handleSubmit}>
         <div><label>First</label>&nbsp;<input onChange={this.handleChange('firstName')} type="text" name="firstName" value={this.state.firstName} /></div>

@@ -6,6 +6,11 @@ import React from 'react';
 import Person from './Person';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import {pure} from 'recompose';
+import styles from './PersonList.pcss';
+
+//material-ui
+import {Card, CardTitle} from 'material-ui/Card';
+import {List as UIList} from 'material-ui/List';
 
 const PersonList = props =>{
   const {persons, title, ...rest} = props;
@@ -14,16 +19,14 @@ const PersonList = props =>{
 
   const avgAge = persons.reduce((r, p) => r + p.age, 0) / persons.count();
 
-  return (
-    <div>
-      <h2>{title}</h2>
-      <p>Average age: {avgAge.toFixed(2)}</p>
-      {persons.map(person => <Person key={person.id}
-                                      {...rest}
-                                      person={person} />)}
-    </div>
+  return(
+    <Card className={styles.card}>
+      <CardTitle title={title} subtitle={"Average age: " + avgAge.toFixed(2)}/>
+      <UIList>
+        {persons.map(person => <Person key={person.id} {...rest} person={person} />)}
+      </UIList>
+    </Card>
   );
-
 };
 
 PersonList.propTypes = {

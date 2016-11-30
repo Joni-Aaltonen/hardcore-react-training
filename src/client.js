@@ -9,6 +9,9 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Root from './Root';
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 // import promiseMiddleware from 'redux-promise-middleware';
 // import thunk from 'redux-thunk';
 // import { createStore } from './utils/redux';
@@ -44,10 +47,14 @@ const { store, history } = createStore(
 
 const root = document.getElementById('app');
 render(
-  <AppContainer>
-     <Root />
-  </AppContainer>,
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+    <Root />
+  </MuiThemeProvider>,
   root
+  // <AppContainer>
+  //    <Root />
+  // </AppContainer>,
+  //root
 );
 
 // No I don't understand what happens under the hood but it works :)

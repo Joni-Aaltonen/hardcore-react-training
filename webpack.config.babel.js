@@ -38,6 +38,7 @@ export function getCommonLoaders(ENV) {
         test: /\.p?css$/,
         include: [
           PATHS.src,
+          'flexboxgrid',
         ],
         loaders: [
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]',
@@ -52,6 +53,7 @@ export function getCommonLoaders(ENV) {
         test: /\.css$/,
         include: [
           PATHS.modules,
+          'flexboxgrid',
         ],
         loaders: [
           'css-loader'
