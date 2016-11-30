@@ -9,8 +9,10 @@ import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import Root from './Root';
 
+//material
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // import promiseMiddleware from 'redux-promise-middleware';
 // import thunk from 'redux-thunk';
@@ -46,6 +48,7 @@ const { store, history } = createStore(
 
 
 const root = document.getElementById('app');
+injectTapEventPlugin();
 render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <Root />
@@ -62,9 +65,9 @@ if (module.hot) {
   module.hot.accept('./Root', () => {
     const Root = require('./Root').default;
     render(
-      <AppContainer>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Root />
-      </AppContainer>,
+      </MuiThemeProvider>,
       root
     );
   });

@@ -31,7 +31,7 @@ export default class AddPersonDialog extends React.Component {
   }
 
   isValid() {
-    return this.state.firstName.length > 3 && this.state.lastName.length > 3 && this.state.gender !== '' && this.state.age > 0;
+    return this.state.firstName.length >= 3 && this.state.lastName.length >= 3 && this.state.gender !== '' && this.state.age !== '';
   }
 
   handleSubmit(e){
