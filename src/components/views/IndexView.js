@@ -30,7 +30,8 @@ class IndexView extends React.PureComponent {
     return (
       <div>
         <AddPersonDialog visible={visible} handleSubmit={this.handleSubmit} closeDialog={closeDialog} addPerson={addPerson}/>
-        <Grid>
+        <p>&nbsp;</p>
+        <Grid fluid>
           <Row>
             <Col xs={12} sm={6}>
               <PersonList deletePerson={deletePerson} persons={persons.filter(p => p.gender === 'm')} title="Male"/>
