@@ -8,6 +8,7 @@ import IconMale from 'material-ui/svg-icons/action/accessibility';
 import IconFemale from 'material-ui/svg-icons/action/pregnant-woman';
 import styles from './AddPersonDialog.pcss';
 import {purple300 as femaleChecked, blue300 as maleChecked, grey300 as unchecked} from 'material-ui/styles/colors';
+import {Field, reduxForm} from 'redux-form';
 
 /**
  * Dialog with action buttons. The actions are passed in as an array of React objects,
@@ -15,9 +16,9 @@ import {purple300 as femaleChecked, blue300 as maleChecked, grey300 as unchecked
  *
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
-export default class AddPersonDialog extends React.PureComponent {
+class AddPersonDialog extends React.PureComponent {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -31,10 +32,11 @@ export default class AddPersonDialog extends React.PureComponent {
   }
 
   isValid() {
+    return true;
     return this.state.firstName.length >= 3 && this.state.lastName.length >= 3 && this.state.gender !== '' && this.state.age !== '';
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
 
     const {addPerson} = this.props;
@@ -65,14 +67,14 @@ export default class AddPersonDialog extends React.PureComponent {
     }
   }
 
-  handleRadioChange(event, val){
+  handleRadioChange(event, val) {
     this.setState({
       ...this.state,
       gender: val,
     });
   }
 
-  handleAgeChange(e, date){
+  handleAgeChange(e, date) {
     this.setState({
       ...this.state,
       age: Math.abs(new Date((Date.now() - date)).getUTCFullYear() - 1970) //http://stackoverflow.com/questions/4060004/calculate-age-in-javascript
@@ -80,6 +82,8 @@ export default class AddPersonDialog extends React.PureComponent {
   }
 
   render() {
+
+    const {handleSubmit} = this.props;
 
     const actions = [
       <FlatButton
@@ -92,60 +96,71 @@ export default class AddPersonDialog extends React.PureComponent {
         primary={true}
         disabled={!this.isValid()}
         keyboardFocused={true}
-        onTouchTap={this.handleSubmit}
+        onClick={handleSubmit}
+
       />,
     ];
 
     return (
       <div>
-        <Dialog
-          title="Add person"
-          actions={actions}
-          modal={false}
-          open={this.props.visible}
-          onRequestClose={this.handleClose}
-        >
-          <TextField
-            hintText="Minimum of three characters"
-            floatingLabelText="First name"
-            onChange={this.handleChange('firstName')}
-            type="text"
-            name="firstName"
-            value={this.state.firstName} />
+          <Dialog
+            title="Add person"
+            actions={actions}
+            modal={false}
+            open={this.props.visible}
+            onRequestClose={this.handleClose}
+          >
+            <form name="addPersonDialog" onSubmit={handleSubmit}>
+              <Field name="firstName" component="input" type="text" />
+              <Field name="lastName" component="input" type="text" />
+              <button type="submit" >test</button>
+              <TextField
+                hintText="Minimum of three characters"
+                floatingLabelText="First name"
+                onChange={this.handleChange('firstName')}
+                type="text"
+                name="firstName"
+                value={this.state.firstName}/>
 
 
-          <TextField
-            hintText="Minimum of three characters"
-            floatingLabelText="Last name"
-            onChange={this.handleChange('lastName')}
-            type="text"
-            name="lastName"
-            value={this.state.lastName} />
+              <TextField
+                hintText="Minimum of three characters"
+                floatingLabelText="Last name"
+                onChange={this.handleChange('lastName')}
+                type="text"
+                name="lastName"
+                value={this.state.lastName}/>
 
-          <DatePicker hintText="Date of birth" mode="landscape" onChange={this.handleAgeChange.bind(this)} />
-        <br /><br />
-          <RadioButtonGroup name="gender" onChange={this.handleRadioChange.bind(this)}>
-            <RadioButton
-              value="m"
-              label="Male"
-              name="gender"
-              checkedIcon={<IconMale color={maleChecked} />}
-              uncheckedIcon={<IconMale color={unchecked} />}
-              style={styles.radioButton}
-            />
+              <DatePicker hintText="Date of birth" mode="landscape" onChange={this.handleAgeChange.bind(this)}/>
+              <br /><br />
+              <RadioButtonGroup name="gender" onChange={this.handleRadioChange.bind(this)}>
+                <RadioButton
+                  value="m"
+                  label="Male"
+                  name="gender"
+                  checkedIcon={<IconMale color={maleChecked}/>}
+                  uncheckedIcon={<IconMale color={unchecked}/>}
+                  style={styles.radioButton}
+                />
 
-            <RadioButton
-              value="f"
-              label="Female"
-              name="gender"
-              checkedIcon={<IconFemale color={femaleChecked} />}
-              uncheckedIcon={<IconFemale color={unchecked} />}
-              style={styles.radioButton}
-            />
-          </RadioButtonGroup>
-
-        </Dialog>
+                <RadioButton
+                  value="f"
+                  label="Female"
+                  name="gender"
+                  checkedIcon={<IconFemale color={femaleChecked}/>}
+                  uncheckedIcon={<IconFemale color={unchecked}/>}
+                  style={styles.radioButton}
+                />
+              </RadioButtonGroup>
+            </form>
+          </Dialog>
       </div>
     );
   }
 }
+
+AddPersonDialog = reduxForm({
+  form: 'addPersonDialog' // a unique name for this form
+})(AddPersonDialog);
+
+export default AddPersonDialog;

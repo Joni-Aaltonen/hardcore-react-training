@@ -11,13 +11,25 @@ import {Grid, Row, Col} from "react-flexbox-grid";
 
 class IndexView extends React.PureComponent {
 
+  constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(e, data){
+    e.preventDefault();
+    console.log(e);
+    console.log(data);
+    console.log(data, 'form data');
+  }
+
   render() {
 
     const {persons, visible, deletePerson, showDialog, addPerson, closeDialog} = this.props;
 
     return (
       <div>
-        <AddPersonDialog visible={visible} closeDialog={closeDialog} addPerson={addPerson}/>
+        <AddPersonDialog visible={visible} handleSubmit={this.handleSubmit} closeDialog={closeDialog} addPerson={addPerson}/>
         <Grid>
           <Row>
             <Col xs={12} sm={6}>

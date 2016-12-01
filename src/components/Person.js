@@ -16,7 +16,6 @@ const Person = (props) => {
 
   const icon = person.gender === 'm' ? <IconMale color={blue} /> : <IconFemale color={red} />;
 
-
 //<Link to={/person/${person.id}}>link</Link>
   return(
     <ListItem
