@@ -15,6 +15,12 @@ const Person = (props) => {
   const {person, deletePerson} = props;
 
   const icon = person.gender === 'm' ? <IconMale color={blue} /> : <IconFemale color={red} />;
+  //
+  // let handleRightIconClick = e => {
+  //   e.preventDefault();
+  //   console.log("================================================");
+  //   deletePerson(person);
+  // }
 
 //<Link to={/person/${person.id}}>link</Link>
   return(
@@ -22,7 +28,10 @@ const Person = (props) => {
       primaryText={`${person.firstName} ${person.lastName}, ${person.age} years`}
       leftIcon={icon}
       onClick={() => browserHistory.push(`/person/${person.id}`)}
-      rightIcon={<ActionDelete color={deleteColor} onClick={e => deletePerson(person)} />}
+      rightIcon={<ActionDelete color={deleteColor} onTouchTap={e => {
+        e.preventDefault();
+        deletePerson(person);
+      }} />}
     />
   );
 
