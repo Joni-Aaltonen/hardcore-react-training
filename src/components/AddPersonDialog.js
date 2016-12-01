@@ -123,7 +123,7 @@ export default class AddPersonDialog extends React.PureComponent {
             value={this.state.lastName} />
 
           <DatePicker hintText="Date of birth" mode="landscape" onChange={this.handleAgeChange.bind(this)} />
-
+        <br /><br />
           <RadioButtonGroup name="gender" onChange={this.handleRadioChange.bind(this)}>
             <RadioButton
               value="m"

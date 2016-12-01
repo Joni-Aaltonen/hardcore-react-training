@@ -14,17 +14,18 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
-// import promiseMiddleware from 'redux-promise-middleware';
-// import thunk from 'redux-thunk';
-// import { createStore } from './utils/redux';
-// import * as reducers from './ducks';
+import promiseMiddleware from 'redux-promise-middleware';
+import thunk from 'redux-thunk';
+import { createStore } from './utils/redux';
+import * as reducers from './ducks';
+import {browserHistory} from 'react-router';
 
 if (__DEVELOPMENT__) {
   const Perf = require('react-addons-perf');
   window.Perf = Perf;
 }
 
-/*
+
 let middleware = [
   thunk,
   promiseMiddleware(),
@@ -41,17 +42,15 @@ const { store, history } = createStore(
   browserHistory,
   middleware,
   [],
-  initialState || undefined
+  undefined
 );
-*/
-
 
 
 const root = document.getElementById('app');
 injectTapEventPlugin();
 render(
   <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <Root />
+    <Root store={store} history={history} />
   </MuiThemeProvider>,
   root
   // <AppContainer>
@@ -66,7 +65,7 @@ if (module.hot) {
     const Root = require('./Root').default;
     render(
       <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <Root />
+        <Root store={store} history={history} />
       </MuiThemeProvider>,
       root
     );
