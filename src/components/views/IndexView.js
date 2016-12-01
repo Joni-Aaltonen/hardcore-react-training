@@ -13,23 +13,20 @@ class IndexView extends React.PureComponent {
 
   constructor(props){
     super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.addPerson = this.addPerson.bind(this);
   }
 
-  handleSubmit(e, data){
-    e.preventDefault();
-    console.log(e);
-    console.log(data);
-    console.log(data, 'form data');
+  addPerson(values) {
+    this.props.addPerson(values);
   }
 
   render() {
 
-    const {persons, visible, deletePerson, showDialog, addPerson, closeDialog} = this.props;
+    const {persons, visible, deletePerson, closeDialog} = this.props;
 
     return (
       <div>
-        <AddPersonDialog visible={visible} handleSubmit={this.handleSubmit} closeDialog={closeDialog} addPerson={addPerson}/>
+        <AddPersonDialog visible={visible} onSubmit={this.addPerson} closeDialog={closeDialog} />
         <p>&nbsp;</p>
         <Grid fluid>
           <Row>

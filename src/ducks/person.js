@@ -1,5 +1,7 @@
 import { List, Map } from 'immutable';
 import personService from '../services/person';
+import uuid from 'node-uuid';
+
 
 const defaultState = Map({
   persons: List(),
@@ -47,9 +49,18 @@ export default function (state = defaultState, action) {
 
   switch (type) {
     case 'PERSON_ADD':
+      //add UUID if missing //FIXME remove when we have actual ID value
+      if(typeof payload.id === 'undefined') payload.id = uuid.v4();
+
+      //calculate age //FIXME feels hacky
+      const age = Math.abs(new Date((Date.now() - payload.dateOfBirth)).getUTCFullYear() - 1970); //http://stackoverflow.com/questions/4060004/calculate-age-in-javascript
+      delete payload.dateOfBirth;
+      payload.age = age;
+
       return state
         .update('persons', persons => persons.push(payload))
         .set('visible', false);
+
     case 'PERSON_DELETE':
       return state.update('persons', persons => persons.filterNot(p => p.id === payload.id));
     case 'PERSON_GET_ALL_FULFILLED':

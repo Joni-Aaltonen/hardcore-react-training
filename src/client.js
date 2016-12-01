@@ -19,7 +19,7 @@ import thunk from 'redux-thunk';
 import { createStore } from './utils/redux';
 import * as reducers from './ducks';
 import {browserHistory} from 'react-router';
-
+import {reducer as formReducer} from 'redux-form';
 if (__DEVELOPMENT__) {
   const Perf = require('react-addons-perf');
   window.Perf = Perf;
@@ -36,9 +36,23 @@ if (true || __DEVELOPMENT__) {
   middleware = middleware.concat([createLogger()]);
 }
 
+//FIXME put this somewhere else
+const reducer = {
+  ...reducers,
+  form: formReducer.plugin({
+    addPersonForm: (state, action) => { // <------ 'account' is name of form given to reduxForm()
+      switch(action.type) {
+        case "PERSON_ADD":
+          return undefined;       // <--- blow away form data
+        default:
+          return state;
+      }
+    }
+  })
+}
 
 const { store, history } = createStore(
-  reducers,
+  reducer,
   browserHistory,
   middleware,
   [],
