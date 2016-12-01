@@ -1,5 +1,6 @@
 import React from 'react';
 import App from './components/App';
+import {pure} from 'recompose';
 
 const Root = props => {
 
@@ -8,4 +9,4 @@ const Root = props => {
   );
 };
 
-export default Root;
+export default pure(Root);

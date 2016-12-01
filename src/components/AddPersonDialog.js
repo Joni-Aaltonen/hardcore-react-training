@@ -15,7 +15,7 @@ import {purple300 as femaleChecked, blue300 as maleChecked, grey300 as unchecked
  *
  * You can also close this dialog by clicking outside the dialog, or with the 'Esc' key.
  */
-export default class AddPersonDialog extends React.Component {
+export default class AddPersonDialog extends React.PureComponent {
 
   constructor(props){
     super(props);
